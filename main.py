@@ -10,7 +10,11 @@ from rich.logging import RichHandler
 
 logging.basicConfig(level="NOTSET", format="%(message)s", datefmt="[%X]", handlers=[RichHandler()])
 logger = logging.getLogger("shields")
-app = FastAPI(name="shields")
+app = FastAPI(
+    name="shields",
+    docs_url="/shields/docs",
+    openapi_url="/shields/openapi.json",
+)
 
 
 class ShieldsAPI:

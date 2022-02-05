@@ -20,7 +20,7 @@ Some property values (s.g. `color`) are following it.
 
 ### Document
 
-See `/docs` for detail.
+See `/shields/docs` for detail.
 
 ### quick document (2022/02/06)
 
