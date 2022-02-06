@@ -1,6 +1,7 @@
 import io
 import logging
 import urllib.parse
+from typing import Optional
 
 import cachetools
 import requests
@@ -22,6 +23,7 @@ class ShieldsAPI:
     async def get(params: dict[str, str]) -> StreamingResponse:
         query = urllib.parse.urlencode(params)
         url = f"https://img.shields.io/static/v1?{query}"
+        logger.info("GET %s", url)
         data = requests.get(url)
         return StreamingResponse(
             io.BytesIO(data.text.encode("utf-8")), status_code=200, media_type="image/svg+xml"
@@ -117,24 +119,67 @@ class Speedrun:
 
 
 @app.get("/shields")
-async def get(label: str, message: str, color: str):
-    return await ShieldsAPI.get({"label": label, "message": message, "color": color})
+async def get(
+    label: str,
+    message: str,
+    color: Optional[str] = None,
+    style: Optional[str] = None,
+    logo: Optional[str] = None,
+):
+    return await ShieldsAPI.get(
+        {
+            "label": label,
+            "message": message,
+            "color": color,
+            "style": style,
+            "logo": logo,
+        }
+    )
 
 
 @app.get("/shields/atcoder/rating")
-async def get(username: str, color: str = "auto"):
+async def get(
+    username: str, color: str = "auto", style: Optional[str] = None, logo: Optional[str] = None
+):
     rating, color = AtCoder.rating(username, color)
-    return await ShieldsAPI.get({"label": "AtCoder", "message": rating, "color": color})
+    return await ShieldsAPI.get(
+        {
+            "label": "AtCoder",
+            "message": rating,
+            "color": color,
+            "style": style,
+            "logo": logo,
+        }
+    )
 
 
 @app.get("/shields/codeforces/rating")
-async def get(username: str, color: str = "auto"):
+async def get(
+    username: str,
+    color: str = "auto",
+    style: Optional[str] = None,
+    logo: Optional[str] = "codeforces",
+):
     rating, color = Codeforces.rating(username, color)
-    return await ShieldsAPI.get({"label": "Codeforces", "message": rating, "color": color})
+    return await ShieldsAPI.get(
+        {
+            "label": "Codeforces",
+            "message": rating,
+            "color": color,
+            "style": style,
+            "logo": logo,
+        }
+    )
 
 
 @app.get("/shields/speedrun/place")
-async def get(username: str, gamename: str, color: str = "green"):
+async def get(
+    username: str,
+    gamename: str,
+    color: Optional[str] = None,
+    style: Optional[str] = None,
+    logo: Optional[str] = None,
+):
     place = await Speedrun.place(username, gamename)
 
     def ordinal(n: int) -> str:
@@ -147,11 +192,25 @@ async def get(username: str, gamename: str, color: str = "green"):
         else:
             return f"{n}th"
 
-    return await ShieldsAPI.get({"label": gamename, "message": ordinal(place), "color": color})
+    return await ShieldsAPI.get(
+        {
+            "label": gamename,
+            "message": ordinal(place),
+            "color": color,
+            "style": style,
+            "logo": logo,
+        }
+    )
 
 
 @app.get("/shields/speedrun/realtime")
-async def get(username: str, gamename: str, color: str = "green"):
+async def get(
+    username: str,
+    gamename: str,
+    color: Optional[str] = None,
+    style: Optional[str] = None,
+    logo: Optional[str] = None,
+):
     realtime = await Speedrun.realtime(username, gamename)  # sec
 
     def format(realtime: int) -> str:
@@ -168,4 +227,12 @@ async def get(username: str, gamename: str, color: str = "green"):
         else:
             return f"{seconds}s"
 
-    return await ShieldsAPI.get({"label": gamename, "message": format(realtime), "color": color})
+    return await ShieldsAPI.get(
+        {
+            "label": gamename,
+            "message": format(realtime),
+            "color": color,
+            "style": style,
+            "logo": logo,
+        }
+    )
