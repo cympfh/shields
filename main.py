@@ -125,6 +125,8 @@ async def get(
     color: Optional[str] = None,
     style: Optional[str] = None,
     logo: Optional[str] = None,
+    labelColor: Optional[str] = None,
+    logoColor: Optional[str] = None,
 ):
     return await ShieldsAPI.get(
         {
@@ -133,13 +135,20 @@ async def get(
             "color": color,
             "style": style,
             "logo": logo,
+            "labelColor": labelColor,
+            "logoColor": logoColor,
         }
     )
 
 
 @app.get("/shields/atcoder/rating")
 async def get(
-    username: str, color: str = "auto", style: Optional[str] = None, logo: Optional[str] = None
+    username: str,
+    color: str = "auto",
+    style: Optional[str] = None,
+    logo: Optional[str] = None,
+    labelColor: Optional[str] = None,
+    logoColor: Optional[str] = None,
 ):
     rating, color = AtCoder.rating(username, color)
     return await ShieldsAPI.get(
@@ -149,6 +158,8 @@ async def get(
             "color": color,
             "style": style,
             "logo": logo,
+            "labelColor": labelColor,
+            "logoColor": logoColor,
         }
     )
 
@@ -159,6 +170,8 @@ async def get(
     color: str = "auto",
     style: Optional[str] = None,
     logo: Optional[str] = "codeforces",
+    labelColor: Optional[str] = None,
+    logoColor: Optional[str] = None,
 ):
     rating, color = Codeforces.rating(username, color)
     return await ShieldsAPI.get(
@@ -168,6 +181,8 @@ async def get(
             "color": color,
             "style": style,
             "logo": logo,
+            "labelColor": labelColor,
+            "logoColor": logoColor,
         }
     )
 
@@ -179,6 +194,8 @@ async def get(
     color: Optional[str] = None,
     style: Optional[str] = None,
     logo: Optional[str] = None,
+    labelColor: Optional[str] = None,
+    logoColor: Optional[str] = None,
 ):
     place = await Speedrun.place(username, gamename)
 
@@ -199,6 +216,8 @@ async def get(
             "color": color,
             "style": style,
             "logo": logo,
+            "labelColor": labelColor,
+            "logoColor": logoColor,
         }
     )
 
@@ -210,6 +229,8 @@ async def get(
     color: Optional[str] = None,
     style: Optional[str] = None,
     logo: Optional[str] = None,
+    labelColor: Optional[str] = None,
+    logoColor: Optional[str] = None,
 ):
     realtime = await Speedrun.realtime(username, gamename)  # sec
 
@@ -234,5 +255,7 @@ async def get(
             "color": color,
             "style": style,
             "logo": logo,
+            "labelColor": labelColor,
+            "logoColor": logoColor,
         }
     )

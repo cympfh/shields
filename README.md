@@ -27,8 +27,8 @@ See `/shields/docs` for detail.
 - `/shields?label=${LABEL}&message=${MESSAGE}&color=${OPTION:COLOR}&style=${OPTION:STYLE}&logo=${OPTION:LOGO}`
     - FreeStyle Badge
     - ![](http://s.cympfh.cc/shields?label=Build&message=failed&color=red&style=flat-square&logo=circleci)
-    - ![](http://s.cympfh.cc/shields?label=+&message=cympfh&style=flat-square&logo=twitch&color=lightgray)
-    - ![](http://s.cympfh.cc/shields?label=+&message=cympfh&style=flat-square&logo=twitter&color=gray)
+    - ![](http://s.cympfh.cc/shields?label=+&message=cympfh&style=flat-square&logo=twitch&color=gray&labelColor=gray&logoColor=white)
+    - ![](http://s.cympfh.cc/shields?label=+&message=cympfh&style=flat-square&logo=twitter&color=gray&labelColor=gray&logoColor=white)
 - `/shields/atcoder/rating?username=${username}`
     - Latest Rating in AtCoder
     - ![](http://s.cympfh.cc/shields/atcoder/rating?username=cympfh&style=flat-square)
